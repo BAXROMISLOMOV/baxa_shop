@@ -36,6 +36,10 @@ function Products() {
   return (
     <div className="grid grid-cols-4 container w-full mx-auto px-6 py-4">
       {products.map((item) => {
+        function LikeQoshish(item: ProductType): void {
+          throw new Error("Function not implemented.");
+        }
+
         return (
           <div key={item.id}>
             <div className="w-64 flex flex-col justify-between h-[400px] relative mb-5 p-6 cursor-pointer bg-white hover:shadow-lg rounded-2xl">
@@ -59,9 +63,12 @@ function Products() {
                 <div className="border-2 cursor-pointer border-amber-500 p-1 rounded-xl">
                   <button onClick={() => CartQoshish(item)}>
                     <Shop />
-                  
+
                   </button>
-                  <button className="absolute right-3 top-1">
+                  <button
+                    onClick={() => LikeQoshish(item)}
+                    className="absolute right-3 top-1"
+                  >
                     <Like />
                   </button>
                 </div>
