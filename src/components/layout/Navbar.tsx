@@ -9,7 +9,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "@/store/store";
 import Image from "next/image";
 import rasm from "../icons/mylogo.png"
-import LikeModal from "../Modal/Like"; // to'g'ri path bo'lishi kerak
+import LikeModal from "../Modal/Like";
 
 function Navbar() {
   const [modal, setModal] = useState(false);

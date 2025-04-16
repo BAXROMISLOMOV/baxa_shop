@@ -5,7 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 import Like from "../icons/Like";
-import { ProductType } from "@/components/layout/Products"; // Type kiritilgan
+import { ProductType } from "@/components/layout/Products"; 
 
 export type LikeProps = {
   modal: boolean;
