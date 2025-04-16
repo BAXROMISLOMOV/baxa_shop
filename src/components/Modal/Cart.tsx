@@ -1,4 +1,4 @@
-import { removeCart, addToCart } from "@/store/slices/cart.slice";
+import { removeCart } from "@/store/slices/cart.slice";
 import { RootState } from "@/store/types";
 import Link from "next/link";
 import React from "react";
@@ -18,11 +18,7 @@ const Savatcha: React.FC<Savat> = ({ modal, setModal }) => {
     dispatch(removeCart(id));
   };
 
-  const increase = (product: any) => {
-    dispatch(addToCart(product));
-  };
-
-  const totalPrice = cartItems.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+  const totalPrice = cartItems.reduce((sum, item) => sum + ((item.price || 0) * (item.quantity || 1)), 0);
 
   if (!modal) return null;
 
@@ -56,7 +52,7 @@ const Savatcha: React.FC<Savat> = ({ modal, setModal }) => {
                   <div className="flex items-center gap-5">
                     <div className="relative w-24 h-24 rounded-lg overflow-hidden bg-white">
                       <Image
-                        src={item.imageUrl || "/placeholder.jpg"}
+                        src={item.image || item.imageUrl || "/placeholder.jpg"}
                         alt={item.name}
                         fill
                         className="object-contain"
@@ -65,28 +61,16 @@ const Savatcha: React.FC<Savat> = ({ modal, setModal }) => {
                     <div className="text-gray-800">
                       <h3 className="text-lg md:text-xl font-semibold">{item.name}</h3>
                       <p className="text-gray-600 text-sm mt-1">
-                        {item.price.toLocaleString()} so'm
+                        {(item.price || 0).toLocaleString()} so'm
                       </p>
-                      <div className="mt-2 flex items-center gap-3">
-                        <button
-                          onClick={() => remove(item.id)}
-                          className="px-3 py-1 bg-red-500 text-white rounded-full text-sm"
-                        >
-                          −
-                        </button>
-                        <span className="font-bold">{item.quantity}</span>
-                        <button
-                          onClick={() => increase(item)}
-                          className="px-3 py-1 bg-green-500 text-white rounded-full text-sm"
-                        >
-                          +
-                        </button>
-                      </div>
+                      <p className="text-sm text-gray-500 mt-1">
+                        Miqdor: {item.quantity}
+                      </p>
                     </div>
                   </div>
 
                   <button
-                    onClick={() => dispatch(removeCart(item.id))}
+                    onClick={() => remove(item.id)}
                     className="mt-3 md:mt-0 text-red-600 text-xl hover:text-red-800 transition font-bold"
                   >
                     &#10005;
