@@ -18,7 +18,10 @@ const Savatcha: React.FC<Savat> = ({ modal, setModal }) => {
     dispatch(removeCart(id));
   };
 
-  const totalPrice = cartItems.reduce((sum, item) => sum + (item.price || 0), 0);
+  const totalPrice = cartItems.reduce(
+    (sum, item) => sum + (item.price || 0) * (item.quantity || 1),
+    0
+  );
 
   if (!modal) return null;
 
@@ -52,7 +55,7 @@ const Savatcha: React.FC<Savat> = ({ modal, setModal }) => {
                   <div className="flex items-center gap-5">
                     <div className="relative w-24 h-24 rounded-lg overflow-hidden bg-white">
                       <Image
-                        src={item.image || "/placeholder.jpg"}
+                        src={item.imageUrl || "/placeholder.jpg"}
                         alt={item.name}
                         fill
                         className="object-contain"
@@ -61,7 +64,7 @@ const Savatcha: React.FC<Savat> = ({ modal, setModal }) => {
                     <div className="text-gray-800">
                       <h3 className="text-lg md:text-xl font-semibold">{item.name}</h3>
                       <p className="text-gray-600 text-sm mt-1">
-                        {item.price?.toLocaleString()} so'm
+                        {item.price?.toLocaleString()} so'm × {item.quantity}
                       </p>
                     </div>
                   </div>
@@ -77,11 +80,9 @@ const Savatcha: React.FC<Savat> = ({ modal, setModal }) => {
             </ul>
 
             <div className="mt-8 border-t pt-4 flex justify-end">
-              <div className="text-right">
-                <p className="text-xl font-semibold text-gray-800">
-                  Jami: {totalPrice.toLocaleString()} so'm
-                </p>
-              </div>
+              <p className="text-xl font-semibold text-gray-800">
+                Jami: {totalPrice.toLocaleString()} so'm
+              </p>
             </div>
           </>
         ) : (

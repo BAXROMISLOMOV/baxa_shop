@@ -8,16 +8,22 @@ import Savatcha from "../Modal/Cart";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store/store";
 import Image from "next/image";
-import rasm from"../icons/mylogo.png"
+import rasm from "../icons/mylogo.png"
+import LikeModal from "../Modal/Like"; // to'g'ri path bo'lishi kerak
+
 function Navbar() {
   const [modal, setModal] = useState(false);
   const cartCount = useSelector((state: RootState) => state.cart.items.length);
+  const [likeModal, setLikeModal] = useState(false);
+
 
   return (
     <>
       <div className="bg-gradient-to-r from-blue-100 to-amber-100 shadow-md">
         <Savatcha modal={modal} setModal={setModal} />
         <nav className="container mx-auto px-6 py-4 flex items-center justify-between flex-wrap gap-4">
+          <LikeModal modal={likeModal} setModal={setLikeModal} />
+
           <Link href={"/"} className="flex items-center gap-2">
             <Image src={rasm} alt="BAHA SHOP" width={45} height={45} />
             <span className="text-2xl font-bold text-gray-800 tracking-wide">BAHA.SHOP</span>
@@ -37,7 +43,10 @@ function Navbar() {
               <UserIcon />
               <p>Kirish</p>
             </div>
-            <div className="flex flex-col items-center text-sm hover:text-blue-600 transition">
+            <div
+              onClick={() => setLikeModal(true)}
+              className="flex flex-col items-center text-sm hover:text-blue-600 transition cursor-pointer"
+            >
               <Like />
               <p>Sevimlilar</p>
             </div>

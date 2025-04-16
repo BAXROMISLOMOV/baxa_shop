@@ -1,74 +1,92 @@
-// import { useDispatch, useSelector } from "react-redux";
-// import { RootState } from "@/store/types";
-// import { removeLike } from "@/store/slices/like.slice";
-// import Image from "next/image";
-// import { ProductType } from "../layout/Products";
-// type Props = {
-//   open: boolean;
-//   onClose: () => void;
-// };
+import { RootState } from "@/store/types";
+import { useDispatch, useSelector } from "react-redux";
+import { removeLike } from "@/store/slices/like.slice";
+import Image from "next/image";
+import Link from "next/link";
+import React from "react";
+import Like from "../icons/Like";
+import { ProductType } from "@/components/layout/Products"; // Type kiritilgan
 
-// const LikeModal: React.FC<Props> = ({ open, onClose }) => {
+export type LikeProps = {
+  modal: boolean;
+  setModal: React.Dispatch<React.SetStateAction<boolean>>;
+};
 
-//   if (!open) return null;
+const LikeModal: React.FC<LikeProps> = ({ modal, setModal }) => {
+  const likedItems = useSelector((state: RootState) => state.like.items);
+  const dispatch = useDispatch();
 
-//   return (
-//     <div
-//       className="fixed inset-0 bg-black/40 flex justify-center items-center z-50"
-//       onClick={onClose}
-//     >
-//       <div
-//         className="bg-white w-full max-w-3xl max-h-[90vh] overflow-y-auto rounded-xl p-6 shadow-xl"
-//         onClick={(e) => e.stopPropagation()}
-//       >
-//         <div className="flex justify-between items-center border-b pb-4 mb-6">
-//           <h2 className="text-2xl font-bold">Yoqtirganlar</h2>
-//           <button
-//             onClick={onClose}
-//             className="text-2xl font-bold text-gray-500 hover:text-red-500"
-//           >
-//             &times;
-//           </button>
-//         </div>
+  const remove = (id: number) => {
+    dispatch(removeLike(id));
+  };
 
-//         {likedItems.length > 0 ? (
-//           <ul className="space-y-4">
-//             {/* {likedItems.map((item: ProductType) => ( */}
-//               <li
-//                 key={item.id}
-//                 className="flex items-center justify-between bg-gray-100 rounded-xl p-4"
-//               >
-//                 <div className="flex items-center gap-4">
-//                   <div className="relative w-20 h-20">
-//                     <Image
-//                       src={item.imageUrl || "/placeholder.jpg"}
-//                       alt={item.name}
-//                       fill
-//                       className="object-contain rounded-lg"
-//                     />
-//                   </div>
-//                   <div>
-//                     <h3 className="font-semibold">{item.name}</h3>
-//                     <p className="text-gray-600 text-sm">
-//                       {item.price.toLocaleString()} so'm
-//                     </p>
-//                   </div>
-//                 </div>
-//                 <button
-//                   onClick={() => dispatch(removeLike(item.id))}
-//                   className="text-red-600 text-lg font-bold hover:text-red-800"
-//                 >
-//                   &#10005;
-//                 </button>
-//               </li>
-//             ))}
-//           </ul>
-//         ) : (
-//           <p className="text-center text-gray-500">Hech narsa yoqmayapti hali 🙃</p>
-//         )}
-//       </div>
-//     </div>
-//   );
-// };
+  if (!modal) return null;
 
-// export default LikeModal;
+  return (
+    <div
+      className="fixed inset-0 z-50 backdrop-blur-sm bg-black/30 flex justify-center items-center"
+      onClick={() => setModal(false)}
+    >
+      <div
+        className="bg-white rounded-2xl w-full max-w-5xl mx-4 md:mx-0 max-h-[90vh] overflow-y-auto p-6 shadow-lg relative"
+        onClick={(e) => e.stopPropagation()}
+      >
+        <div className="flex justify-between items-center border-b pb-4 mb-6">
+          <h2 className="text-2xl md:text-3xl font-bold text-gray-800">Sevimlilar</h2>
+          <button
+            className="text-3xl font-bold text-gray-500 hover:text-red-500 transition"
+            onClick={() => setModal(false)}
+          >
+            &times;
+          </button>
+        </div>
+
+        {likedItems.length > 0 ? (
+          <ul className="space-y-6">
+            {likedItems.map((item: ProductType) => (
+              <li
+                key={item.id}
+                className="flex flex-col md:flex-row md:items-center justify-between bg-gray-100 hover:bg-gray-200 transition rounded-xl p-4"
+              >
+                <div className="flex items-center gap-5">
+                  <div className="relative w-24 h-24 rounded-lg overflow-hidden bg-white">
+                    <Image
+                      src={item.imageUrl || "/placeholder.jpg"}
+                      alt={item.name}
+                      fill
+                      className="object-contain"
+                    />
+                  </div>
+                  <div className="text-gray-800">
+                    <h3 className="text-lg md:text-xl font-semibold">{item.name}</h3>
+                    <p className="text-gray-600 text-sm mt-1">
+                      {item.price.toLocaleString()} so'm
+                    </p>
+                  </div>
+                </div>
+
+                <button
+                  onClick={() => remove(item.id)}
+                  className="mt-3 md:mt-0 text-red-600 text-xl hover:text-red-800 transition font-bold"
+                >
+                  <Like />
+                </button>
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <div className="text-center mt-10">
+            <h2 className="text-2xl font-bold text-gray-700">Sevimlilar bo‘sh</h2>
+            <Link href="/">
+              <button className="mt-6 px-6 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-full transition text-lg font-semibold">
+                Mahsulotlarni ko‘rish
+              </button>
+            </Link>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+};
+
+export default LikeModal;
