@@ -1,6 +1,37 @@
+import { Map, Placemark, YMaps } from "@pbe/react-yandex-maps";
+import { useState } from "react";
+
 function Footer() {
+  const [map, setMap] = useState<{
+    latitude: number,
+    longtitute: number
+  }>()
   return (
+
     <footer className="bg-slate-100 text-gray-800 font-sans">
+      <div>
+        <button className="w-10 h-10 bg-red-500 text-amber-50" onClick={() => {
+          navigator.geolocation.getCurrentPosition((data) => {
+            setMap({
+              latitude: data.coords.latitude,
+              longtitute: data.coords.longitude
+            })
+          })
+        }}>Findme</button>
+        <YMaps>
+          <Map style={{
+            height: 400,
+            width: "100%"
+          }} state={
+            {
+              center: map?[map?.latitude , map?.longtitute] :  [ 41.2995, 69.2401],
+              zoom: 20,
+            }
+          }>
+            <Placemark geometry={[map?.latitude , map?.longtitute]} />
+          </Map>
+        </YMaps>
+      </div>
       <div className="container mx-auto px-6 md:px-12 py-10 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8">
 
         <div className="flex flex-col gap-4">
@@ -15,7 +46,7 @@ function Footer() {
             <span className="text-sm text-gray-500">Ijtimoiy tarmoqlar</span>
           </div>
           <p className="underline font-semibold cursor-pointer hover:text-blue-700 transition">
-           <a href="https://www.google.com/maps/@41.320296,69.2996732,15z?entry=ttu&g_ep=EgoyMDI1MDQwOS4wIKXMDSoJLDEwMjExNjQwSAFQAw%3D%3D"> Do‘kon manzillari </a>
+            <a href="https://www.google.com/maps/@41.320296,69.2996732,15z?entry=ttu&g_ep=EgoyMDI1MDQwOS4wIKXMDSoJLDEwMjExNjQwSAFQAw%3D%3D"> Do‘kon manzillari </a>
           </p>
         </div>
 
