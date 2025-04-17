@@ -1,4 +1,4 @@
-import { Map, Placemark, YMaps } from "@pbe/react-yandex-maps";
+import { YMaps, Map, Placemark } from '@iminside/react-yandex-maps';
 import { useState } from "react";
 
 function Footer() {
