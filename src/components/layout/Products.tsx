@@ -5,11 +5,11 @@ import { ReactNode, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/store/store";
 import { addToCart } from "@/store/slices/cart.slice";
-import { toggleLike } from "@/store/slices/like.slice";
 import Like from "../icons/Like";
 import Shop from "../icons/Shop";
 
 export type ProductType = {
+  count: number;
   quantity: ReactNode;
   image: string;
   categoryId: number;
@@ -50,7 +50,7 @@ function Products() {
 
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 container mx-auto px-6 py-4">
         {products.map((item) => {
-          const isLiked = likedItems.some((liked) => liked.id === item.id);
+          const isLiked = likedItems.some((liked: { id: number; }) => liked.id === item.id);
 
           return (
             <div key={item.id} className="w-full flex flex-col justify-between h-[420px] relative p-6 bg-white hover:shadow-lg rounded-2xl">
@@ -96,3 +96,7 @@ function Products() {
 }
 
 export default Products;
+function toggleLike(product: ProductType): any {
+  throw new Error("Function not implemented.");
+}
+

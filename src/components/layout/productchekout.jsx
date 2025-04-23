@@ -1,10 +1,9 @@
 import { useSelector } from "react-redux";
-import { RootState } from "@/store/types";
 import { useRouter } from "next/router";
 import Image from "next/image";
 
 export default function CheckoutPage() {
-  const cartItems = useSelector((state: RootState) => state.cart.items);
+  const cartItems = useSelector((state) => state.cart.items);
   const totalPrice = cartItems.reduce((sum, item) => sum + (item.price || 0) * (item.quantity || 1), 0);
   const router = useRouter();
 

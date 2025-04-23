@@ -1,6 +1,5 @@
 import { RootState } from "@/store/types";
 import { useDispatch, useSelector } from "react-redux";
-import { removeLike } from "@/store/slices/like.slice";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
@@ -36,6 +35,7 @@ const LikeModal: React.FC<LikeProps> = ({ modal, setModal }) => {
           <button
             className="text-3xl font-bold text-gray-500 hover:text-red-500 transition"
             onClick={() => setModal(false)}
+            aria-label="Close modal"
           >
             &times;
           </button>
@@ -53,7 +53,8 @@ const LikeModal: React.FC<LikeProps> = ({ modal, setModal }) => {
                     <Image
                       src={item.imageUrl || "/placeholder.jpg"}
                       alt={item.name}
-                      fill
+                      layout="fill"
+                      objectFit="contain"
                       className="object-contain"
                     />
                   </div>
@@ -68,6 +69,7 @@ const LikeModal: React.FC<LikeProps> = ({ modal, setModal }) => {
                 <button
                   onClick={() => remove(item.id)}
                   className="mt-3 md:mt-0 text-red-600 text-xl hover:text-red-800 transition font-bold"
+                  aria-label={`Remove ${item.name} from favorites`}
                 >
                   <Like />
                 </button>
@@ -90,3 +92,7 @@ const LikeModal: React.FC<LikeProps> = ({ modal, setModal }) => {
 };
 
 export default LikeModal;
+function removeLike(id: number): any {
+  throw new Error("Function not implemented.");
+}
+
