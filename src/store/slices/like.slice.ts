@@ -1,6 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import {  } from "../types";
-import { ProductType } from "@/components/layout/Products";
+import { ProductType } from "../types";
 
 type LikeState = {
   items: ProductType[];

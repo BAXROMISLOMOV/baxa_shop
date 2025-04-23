@@ -9,7 +9,6 @@ import Like from "../icons/Like";
 import Shop from "../icons/Shop";
 
 export type ProductType = {
-  count: number;
   quantity: ReactNode;
   image: string;
   categoryId: number;
@@ -26,7 +25,7 @@ function Products() {
   const [products, setProducts] = useState<ProductType[]>([]);
   const dispatch = useDispatch();
 
-  const likedItems = useSelector((state: RootState) => state.like.items);
+  const likedItems = useSelector((state: RootState) => state);
 
   useEffect(() => {
     axios
@@ -50,7 +49,7 @@ function Products() {
 
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 container mx-auto px-6 py-4">
         {products.map((item) => {
-          const isLiked = likedItems.some((liked: { id: number; }) => liked.id === item.id);
+          // const isLiked = likedItems((liked: { id: number; }) => liked.id === item.id);
 
           return (
             <div key={item.id} className="w-full flex flex-col justify-between h-[420px] relative p-6 bg-white hover:shadow-lg rounded-2xl">
@@ -85,7 +84,7 @@ function Products() {
                 onClick={() => handleToggleLike(item)}
                 className="absolute top-4 right-4"
               >
-                <Like color={isLiked ? "red" : "gray"} />
+                {/* <Like color={ ? "red" : "gray"} /> */}
               </button>
             </div>
           );

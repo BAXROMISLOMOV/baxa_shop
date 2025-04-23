@@ -12,7 +12,7 @@ export type LikeProps = {
 };
 
 const LikeModal: React.FC<LikeProps> = ({ modal, setModal }) => {
-  const likedItems = useSelector((state: RootState) => state.like.items);
+  const likedItems = useSelector((state: RootState) => state);
   const dispatch = useDispatch();
 
   const remove = (id: number) => {
@@ -35,7 +35,6 @@ const LikeModal: React.FC<LikeProps> = ({ modal, setModal }) => {
           <button
             className="text-3xl font-bold text-gray-500 hover:text-red-500 transition"
             onClick={() => setModal(false)}
-            aria-label="Close modal"
           >
             &times;
           </button>
@@ -53,8 +52,7 @@ const LikeModal: React.FC<LikeProps> = ({ modal, setModal }) => {
                     <Image
                       src={item.imageUrl || "/placeholder.jpg"}
                       alt={item.name}
-                      layout="fill"
-                      objectFit="contain"
+                      fill
                       className="object-contain"
                     />
                   </div>
@@ -69,7 +67,6 @@ const LikeModal: React.FC<LikeProps> = ({ modal, setModal }) => {
                 <button
                   onClick={() => remove(item.id)}
                   className="mt-3 md:mt-0 text-red-600 text-xl hover:text-red-800 transition font-bold"
-                  aria-label={`Remove ${item.name} from favorites`}
                 >
                   <Like />
                 </button>
