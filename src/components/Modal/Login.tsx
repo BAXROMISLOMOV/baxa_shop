@@ -15,6 +15,7 @@ const LoginModal = ({ modal, setModal }: { modal: boolean; setModal: (val: boole
     <div className="fixed inset-0 z-50 backdrop-blur-sm bg-black/30 flex justify-center items-center">
       <div className="bg-white p-6 rounded-xl shadow-xl w-full max-w-md space-y-4">
         <h2 className="text-xl font-bold text-center text-gray-800">Kirish</h2>
+        
         <input
           type="text"
           placeholder="Ismingiz"
