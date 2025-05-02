@@ -6,7 +6,7 @@ import { authSlice } from "./slices/auth.slice";
 export const store = configureStore({
   reducer: {
     cart: cartReducer,
-    likeCart: likeReducer,
+    like: likeReducer,
     auth: authSlice.reducer,
   },
 });

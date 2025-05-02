@@ -1,10 +1,11 @@
-import { RootState } from "@/store/types";
+import { RootState } from "@/store/store";
 import { useDispatch, useSelector } from "react-redux";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 import Like from "../icons/Like";
-import { ProductType } from "@/components/layout/Products"; 
+import { ProductType } from "@/components/layout/Products";
+import { removeLike } from "@/store/slices/like.slice"; 
 
 export type LikeProps = {
   modal: boolean;
@@ -12,7 +13,7 @@ export type LikeProps = {
 };
 
 const LikeModal: React.FC<LikeProps> = ({ modal, setModal }) => {
-  const likedItems = useSelector((state: RootState) => state);
+  const likedItems = useSelector((state: RootState) => state.like.items);
   const dispatch = useDispatch();
 
   const remove = (id: number) => {
@@ -40,7 +41,7 @@ const LikeModal: React.FC<LikeProps> = ({ modal, setModal }) => {
           </button>
         </div>
 
-        {likedItems.length > 0 ? (
+        {likedItems?.length > 0 ? (
           <ul className="space-y-6">
             {likedItems.map((item: ProductType) => (
               <li
@@ -89,7 +90,3 @@ const LikeModal: React.FC<LikeProps> = ({ modal, setModal }) => {
 };
 
 export default LikeModal;
-function removeLike(id: number): any {
-  throw new Error("Function not implemented.");
-}
-
