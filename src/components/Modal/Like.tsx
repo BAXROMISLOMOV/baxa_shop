@@ -14,6 +14,8 @@ export type LikeProps = {
 
 const LikeModal: React.FC<LikeProps> = ({ modal, setModal }) => {
   const likedItems = useSelector((state: RootState) => state.like.items);
+  console.log(likedItems);
+  
   const dispatch = useDispatch();
 
   const remove = (id: number) => {
